@@ -155,7 +155,23 @@ Unfortunately, Algolia won't allow us to use localhost to upload our data. That 
 
 #### 2.1.2 Host app in Vercel
 
-There are some steps that I'm gonna assume you know how to do: pushing your project in GitHub, and signing up/log in to Vercel using yur GitHub account.
+There are some steps that I'm gonna assume you know how to do: pushing your project in [GitHub](https://github.com/), and signing up/log in to [Vercel](https://vercel.com/) using your GitHub account to make the whole process easier.
+
+Once you are in your Vercel dashboard, click on `Add New...`, and select `Project`.
+
+![alt text](blog/images/image-6.png)
+
+A new screen will appear where you can select your repo. Click on `Import` right next to its name:
+
+![alt text](blog/images/image-7.png)
+
+Next screen, leave it as it is, and just click on `Deploy`.
+
+![alt text](blog/images/image-8.png)
+
+Wait until your project is fully deployed. A screen like this should appear:
+
+![alt text](blog/images/image-9.png)
 
 # References
 
