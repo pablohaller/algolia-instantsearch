@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/csv/*.ts": {
+    "app/api/csv/*.ts": {
       "includeFiles": "data.csv"
     }
   }
