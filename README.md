@@ -173,6 +173,52 @@ Wait until your project is fully deployed. A screen like this should appear:
 
 ![alt text](blog/images/image-9.png)
 
+Click on `Continue to Dashboard`. You'll see the following screen, where you can copy and paste the url you can see in `Domains` field.
+
+![alt text](blog/images/image-10.png)
+
+#### 2.1.3 Connect hosted app to Algolia
+
+Let's go back again to the CSV Connection screen.
+
+![alt text](blog/images/image-4.png)
+
+Click on the `Select` right next to Basic Auth.
+Click on the input that appears, and then on `+ Create a new Basic Auth authentication`.
+
+![alt text](blog/images/image-11.png)
+
+Then, a popup will display. Fill it with the same credentials that are available in the code, and click on `Create Authentication`.
+
+![alt text](blog/images/image-12.png)
+
+Now, go for the next fields.
+
+![alt text](blog/images/image-13.png)
+
+Using the url that Vercel provided us, copy and paste it for the `URL` field. **Don't forget to add `/api/csv` at the end**.
+
+For `Unique column identifier`, use ID.
+
+For `CSV Delimeter`, use `,`.
+
+For `Column type mapping`, just click on `Help me with my type mapping`, and copy and paste the first lines from your `.csv` file. Algolia will do the rest!
+
+Finally, assign any name you want for this collection for further use, and click on `Create Source`.
+
+Next step, select your index and click on `Create one for me`. This will create a set of credentials to add the data to the index. You can go through a manual process, but for this guide, is faster this way. Finally, click on `Create Destination`.
+
+![alt text](blog/images/image-14.png).
+
+Configure accordion will be displayed. Leave it as it is, and click on `Create Task` down below.
+
+You'll be redirected into the tasks tab under `Data Sources > Connectors`. You can hit the play button at the end to start the data gathering from your app.
+
+![alt text](blog/images/image-15.png)
+
+Everything should be set now!
+You (and I) did great!
+
 # References
 
 Some code here is based on some of the following links.

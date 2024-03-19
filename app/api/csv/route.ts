@@ -25,10 +25,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const file = await fs.readFile(
-    process.cwd() + "/app/api/csv/data.csv",
-    "utf8"
-  );
+  const file = await fs.readFile(process.cwd() + "/app/data.csv", "utf8");
 
   return new NextResponse(file, {
     headers: {
