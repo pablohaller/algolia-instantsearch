@@ -1,16 +1,8 @@
 # Building Cool Searching UIs with Algolia and InstantSearch
 
-Are you a freak, like me? Or a dev? If you said yes to both, go here. If you only said yes to the second one, go stright [here](#our-solution):
-
-Imagine a dark night. Multiverse collides, and something unexpected happen. You, among all, end up between worlds, and out of nowhere you get into a rooftop.
-
-There is a funky silhouette you recognize... could it be him? Yes, its him! It's Batman! You approach him, and after a couple of minutes, you reveal him who you are, where you come from, and how do you know so much about him... and everyone else.
-
-After a while, you both make a deal. He'll help you get home, as long as you help him with all the data you know about superheroes from Marvel, DC, and every other thing you know. But, you might want to surprise him! As a dev, you'll love to make him happy with a cool searching tool, using a powerful engine, delivering beautiful, customized UI with lots, and lots of user experience, right? Then...
-
 # What are we going to do?
 
-We're gonna creat a search app using Algolia, and their amazing library, InstantSearch. Our tech stack will be NextJS, as it will help us to upload the data we need to Algolia, creating the UI alongside TailwindCSS.
+We're gonna create a search app using Algolia, and their amazing library, InstantSearch. Our tech stack will be NextJS, as it will help us to upload the data we need to Algolia, creating the UI alongside TailwindCSS.
 
 You ready? I'm not.
 
@@ -154,3 +146,21 @@ export async function GET(req: NextRequest) {
 Now, if you try to access from your browser, you shouldn't be able to do anything. You can use a tool like [Insomnia](https://insomnia.rest/download) to make a new request adding easily your authorization header, like this:
 
 ![alt text](blog/images/image-5.png)
+
+For those "credentials", the encoded Base64 string you need is this one `NGRtaW46dGVzdHB3ZDEyMw==`. Remember that, if you want to change the password or username by some reason, you'll need to encode it again, which you can do with [btoa](https://developer.mozilla.org/en-US/docs/Web/API/btoa) using Javascript.
+
+Everything should be ready, right?
+
+Unfortunately, Algolia won't allow us to use localhost to upload our data. That would be a problem if we didn't have Vercel, which offers a suitable free tier that will host our application.
+
+#### 2.1.2 Host app in Vercel
+
+There are some steps that I'm gonna assume you know how to do: pushing your project in GitHub, and signing up/log in to Vercel using yur GitHub account.
+
+# References
+
+Some code here is based on some of the following links.
+
+- [How to stream files from Next.js Route Handlers by Eric Burel](https://www.ericburel.tech/blog/nextjs-stream-files)
+
+- [How do I add Basic Authentication to Nextjs node server?](https://stackoverflow.com/questions/64316886/how-do-i-add-basic-authentication-to-nextjs-node-server)
