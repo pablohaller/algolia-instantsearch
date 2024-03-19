@@ -1,0 +1,103 @@
+ID,Name,Group,Power,Age,Nationality,Hero/Villain
+1,Superman,Justice League,Superhuman strength,35,Kryptonian,Hero
+2,Batman,Justice League,Genius-level intellect,40,American,Hero
+3,Wonder Woman,Justice League,Divine powers,3000,Amazonian,Hero
+4,The Flash,Justice League,Superhuman speed,30,American,Hero
+5,Green Lantern,Justice League,Energy constructs,32,Varies (often American),Hero
+6,Aquaman,Justice League,Underwater adaptation,40,Atlantean,Hero
+7,Martian Manhunter,Justice League,Shapeshifting,5000,Martian,Hero
+8,Green Arrow,Justice League,Master archer,38,American,Hero
+9,Black Canary,Justice League,Canary Cry,33,American,Hero
+10,Cyborg,Justice League,Technological enhancements,28,American,Hero
+11,Shazam,Justice League,Wisdom of Solomon,25,American,Hero
+12,Hawkman,Justice League,Flight,2500,Thanagarian,Hero
+13,Hawkgirl,Justice League,Flight,2200,Thanagarian,Hero
+14,Zatanna,Justice League Dark,Magic spells,32,American,Hero
+15,John Constantine,Justice League Dark,Magic,38,British,Hero
+16,Swamp Thing,Justice League Dark,Control over plant life,5000,American,Hero
+17,Raven,Teen Titans,Empathy,21,American,Hero
+18,Beast Boy,Teen Titans,Animal transformation,19,American,Hero
+19,Starfire,Teen Titans,Energy projection,25,Tamaranean,Hero
+20,Nightwing,Bat Family,Acrobatics,35,American,Hero
+21,Red Hood,Bat Family,Marksmanship,30,American,Hero
+22,Batgirl,Bat Family,Intellect,28,American,Hero
+23,Robin,Bat Family,Acrobatics,21,American,Hero
+24,Supergirl,Superman Family,Flight,30,Kryptonian,Hero
+25,Batwoman,Bat Family,Detective skills,32,American,Hero
+26,Oracle,Bat Family,Information analysis,35,American,Hero
+27,Black Lightning,Outsiders,Electricity manipulation,40,American,Hero
+28,Katana,Outsiders,Swordsmanship,30,Japanese,Hero
+29,Metamorpho,Outsiders,Shapeshifting,45,American,Hero
+30,Geo-Force,Outsiders,Earth manipulation,30,Markovian,Hero
+31,The Atom,Justice League,Size manipulation,33,American,Hero
+32,Firestorm,Justice League,Transmutation,29,American,Hero
+33,Vixen,Justice League,Animal mimicry,28,African,Hero
+34,Blue Beetle,Justice League,Powered armor,22,American,Hero
+35,Booster Gold,Justice League,Futuristic technology,28,American,Hero
+36,Plastic Man,Justice League,Elasticity,36,American,Hero
+37,Mr. Miracle,Justice League,Escape artist,40,New God,Hero
+38,Big Barda,Justice League,Superhuman strength,38,New God,Hero
+39,Doctor Fate,Justice League Dark,Sorcery,55,,Hero
+40,Etrigan the Demon,Justice League Dark,Superhuman strength,500,Demon,Hero
+41,Deadman,Justice League Dark,Astral projection,300,American,Hero
+42,Constantine Drakon,Villains,Martial artist,45,American,Villain
+43,Deathstroke,Villains,Enhanced abilities,45,American,Villain
+44,Lex Luthor,Villains,Intellect,60,American,Villain
+45,Joker,Villains,Mastermind,unknown,American,Villain
+46,Harley Quinn,Villains,Acrobatics,30,American,Villain
+47,Poison Ivy,Villains,Plant control,32,American,Villain
+48,Catwoman,Villains,Stealth,35,American,Villain
+49,Riddler,Villains,Intellect,40,American,Villain
+50,Penguin,Villains,Criminal mastermind,55,American,Villain
+ID,Name,Group,Power,Age,Nationality,Hero/Villain
+51,Two-Face,Villains,Dual personality,38,American,Villain
+52,Ra's al Ghul,Villains,Immortality,600,Arabian,Villain
+53,Bane,Villains,Superhuman strength,40,Caribbean,Villain
+54,Scarecrow,Villains,Fear toxins,45,American,Villain
+55,Deadshot,Villains,Expert marksman,35,American,Villain
+56,Black Adam,Villains,Magic,4000,Kahndaqi,Villain
+57,Sinestro,Villains,Power ring,50,Korugarian,Villain
+58,Darkseid,Villains,Superhuman strength,unknown,Apokoliptian,Villain
+59,Black Manta,Villains,Underwater combat,45,Atlantean,Villain
+60,Giganta,Villains,Size manipulation,35,American,Villain
+61,Captain Cold,Villains,Cryogenic weaponry,45,American,Villain
+62,Reverse-Flash,Villains,Superhuman speed,unknown,American,Villain
+63,Gorilla Grodd,Villains,Telepathy,unknown,Gorilla,Villain
+64,Brainiac,Villains,Superhuman intelligence,unknown,Coluan,Villain
+65,Amazo,Villains,Power replication,unknown,Android,Villain
+66,Despero,Villains,Superhuman strength,unknown,Kalanorian,Villain
+67,Mongul,Villains,Control over Warworld,unknown,Warzoonian,Villain
+68,Solomon Grundy,Villains,Superhuman strength,unknown,American,Villain
+69,Cheetah,Villains,Superhuman speed,40,American,Villain
+70,Mr. Freeze,Villains,Cryogenic technology,50,American,Villain
+71,Deathstroke,Villains,Enhanced physical abilities,55,American,Villain
+72,Black Canary,Birds of Prey,Canary Cry,30,American,Hero
+73,Huntress,Birds of Prey,Expert marksmanship,35,American,Hero
+74,Oracle,Birds of Prey,Information analysis,35,American,Hero
+75,Lady Shiva,Birds of Prey,Master martial artist,40,Asian,Hero
+76,Katana,Birds of Prey,Soultaker sword,30,Japanese,Hero
+77,Harley Quinn,Birds of Prey,Acrobatics,30,American,Villain
+78,Black Mask,Birds of Prey,Hand-to-hand combat,40,American,Villain
+79,Bumblebee,Teen Titans,Size manipulation,25,American,Hero
+80,Argent,Teen Titans,Energy constructs,20,American,Hero
+81,Terra,Teen Titans,Earth manipulation,16,American,Hero
+82,Kid Flash,Teen Titans,Superhuman speed,20,American,Hero
+83,Jericho,Teen Titans,Telepathy,26,American,Hero
+84,Aqualad,Teen Titans,Hydrokinesis,21,Atlantean,Hero
+85,Thunder,Outsiders,Shockwave generation,28,American,Hero
+86,Grace,Outsiders,Enhanced strength,28,American,Hero
+87,Looker,Outsiders,Telepathy,29,American,Hero
+88,Atom Smasher,Outsiders,Size manipulation,31,American,Hero
+89,Halo,Outsiders,Energy manipulation,16,American,Hero
+90,Batwing,Bat Family,Technological suit,26,American,Hero
+91,Spoiler,Bat Family,Stealth,22,American,Hero
+92,Orphan,Bat Family,Stealth,20,American,Hero
+93,Azrael,Bat Family,Master swordsman,32,American,Hero
+94,Man-Bat,Villains,Flight,40,American,Villain
+95,Killer Croc,Villains,Enhanced strength,40,American,Villain
+96,Clayface,Villains,Shapeshifting,35,American,Villain
+97,Mad Hatter,Villains,Mind control,45,American,Villain
+98,Blackfire,Villains,Energy projection,25,Tamaranean,Villain
+99,Trigon,Villains,Demonic powers,1000,Demon,Villain
+100,Maxie Zeus,Villains,Control over electricity,50,Greek,Villain
+
