@@ -1,7 +1,7 @@
 {
   "functions": {
-    "api/csv/data.csv": {
-      "includeFiles": "greet.cjs"
+    "api/csv": {
+      "includeFiles": "data.csv"
     }
   }
 }
