@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/csv": {
+    "api/csv/route.ts": {
       "includeFiles": "data.csv"
     }
   }
