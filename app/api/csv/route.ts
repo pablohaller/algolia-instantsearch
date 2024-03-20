@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
 
-export const dynamic = "force-dynamic"; // defaults to auto
+export const runtime = "edge";
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
 
