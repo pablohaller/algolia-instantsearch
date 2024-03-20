@@ -219,10 +219,31 @@ You'll be redirected into the tasks tab under `Data Sources > Connectors`. You c
 Everything should be set now!
 You (and I) did great!
 
+Once its done, you'll see a green check mark ✅ in the status column.
+
+If you want to double check, go to `Search` (magnifying glass icon), and your index should display with all the data.
+
+![alt text](blog/images/image-16.png)
+
+![alt text](blog/images/image-17.png)
+
+> ⚠️ You might encounter an empty record that corresponds to the header in the example file. You can delete it directly from Algolia's search results clicking on the trash, as seen in the image above.
+
+## 3. Setup InstantSearch
+
+We're finally here. This part will be so much fun!
+
 # References
 
 Some code here is based on some of the following links.
 
-- [How to stream files from Next.js Route Handlers by Eric Burel](https://www.ericburel.tech/blog/nextjs-stream-files)
+- [(Blog post) How to stream files from Next.js Route Handlers by Eric Burel](https://www.ericburel.tech/blog/nextjs-stream-files)
 
-- [How do I add Basic Authentication to Nextjs node server?](https://stackoverflow.com/questions/64316886/how-do-i-add-basic-authentication-to-nextjs-node-server)
+- [(Stackoverflow )How do I add Basic Authentication to Nextjs node server?](https://stackoverflow.com/questions/64316886/how-do-i-add-basic-authentication-to-nextjs-node-server)
+
+- [(Github Issue) Using the new App Route Handlers](https://github.com/vercel/next.js/discussions/51662)
+
+# Publish notes
+
+- [ ] Chequear el código del route handler.
+- [ ] En el párrafo donde diga de hacer el csv en el mismo folder, cambiar por una nueva ruta que se llame data.

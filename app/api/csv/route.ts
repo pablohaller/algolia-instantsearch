@@ -26,9 +26,7 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  // const file = await fs.readFile(process.cwd() + "/app/data/data.csv", "utf8");
   const csvDirectory = path.join(process.cwd(), "data/data.csv");
-  console.log(csvDirectory);
   const file = await fs.readFile(csvDirectory, "utf8");
 
   return new NextResponse(file, {
