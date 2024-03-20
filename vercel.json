@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "app/api/csv/*.ts": {
-      "includeFiles": "data.csv"
-    }
-  }
-}
