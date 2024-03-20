@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
-import data from "@/app/data/data.csv";
 
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
