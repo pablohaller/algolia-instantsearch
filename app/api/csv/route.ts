@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { promises as fs } from "fs";
+import data from "@/app/data/data.csv";
 
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
@@ -25,7 +26,8 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  const file = await fs.readFile(process.cwd() + "/app/data/data.csv", "utf8");
+  // const file = await fs.readFile(process.cwd() + "/app/data/data.csv", "utf8");
+  const file = await fs.readFile("@/app/data/data.csv", "utf8");
 
   return new NextResponse(file, {
     headers: {
