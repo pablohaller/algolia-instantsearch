@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import path from "path";
 import { promises as fs } from "fs";
 
 export async function GET(req: NextRequest) {
@@ -26,7 +27,9 @@ export async function GET(req: NextRequest) {
   }
 
   // const file = await fs.readFile(process.cwd() + "/app/data/data.csv", "utf8");
-  const file = await fs.readFile("@/app/data/data.csv", "utf8");
+  const csvDirectory = path.join(process.cwd(), "data/data.csv");
+  console.log(csvDirectory);
+  const file = await fs.readFile(csvDirectory, "utf8");
 
   return new NextResponse(file, {
     headers: {
