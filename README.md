@@ -1,8 +1,10 @@
-# Building Cool Searching UIs with Algolia and InstantSearch
+# Building Cool Searching UIs with Algolia and React-InstantSearch
 
 # What are we going to do?
 
 We're gonna create a search app using Algolia, and their amazing library, InstantSearch. Our tech stack will be NextJS, as it will help us to upload the data we need to Algolia, creating the UI alongside TailwindCSS.
+
+We're gonna pick some characters from a videogame (Genshin Impact) and display them in a fancy way, being able to click around to filter and expand our character's data.
 
 You ready? I'm not.
 
@@ -34,7 +36,7 @@ Click on `Upload records`, and select `Add connector`. You'll be redirected to t
 
 In my experience, many times records are stored into a single `.csv` file, so we're going to do it that way. Select `CSV` option, and press `Connect`. It will display a new screen, where you need to click on `Get Started` to start configuring.
 
-### 2.1 Data Source Configuration
+### 2.1. Data Source Configuration
 
 Before even thinking on how our data is going to look like (because I haven't thought of it yet), we'll start developing our endpoint.
 
@@ -44,7 +46,7 @@ In this new screen, you'll see different fields that we need to set up.
 
 First one is asking if our data is protected. We want to consider this as somewhat sensitive data we don't want people downloading freely. To protect it, we'll be using Algolia's suggestion (basic auth) to authenticate and authorize access to our `.csv`.
 
-#### 2.1.1 `.csv` API route.
+#### 2.1.1. `.csv` API route.
 
 This is a great moment to do some hands on. I'll assume you don't have NextJS background, but that won't save you from reading the docs at least a little bit if any doubts come up to you or I miss a step. Hopefully, you already have it installed, otherwise, go check the official [Get Started Installation Guide](https://nextjs.org/docs/getting-started/installation).
 
@@ -153,7 +155,7 @@ Everything should be ready, right?
 
 Unfortunately, Algolia won't allow us to use localhost to upload our data. That would be a problem if we didn't have Vercel, which offers a suitable free tier that will host our application.
 
-#### 2.1.2 Host app in Vercel
+#### 2.1.2. Host app in Vercel
 
 There are some steps that I'm gonna assume you know how to do: pushing your project in [GitHub](https://github.com/), and signing up/log in to [Vercel](https://vercel.com/) using your GitHub account to make the whole process easier.
 
@@ -177,7 +179,7 @@ Click on `Continue to Dashboard`. You'll see the following screen, where you can
 
 ![alt text](blog/images/image-10.png)
 
-#### 2.1.3 Connect hosted app to Algolia
+#### 2.1.3. Connect hosted app to Algolia
 
 Let's go back again to the CSV Connection screen.
 
@@ -231,7 +233,198 @@ If you want to double check, go to `Search` (magnifying glass icon), and your in
 
 ## 3. Setup InstantSearch
 
-We're finally here. This part will be so much fun!
+We're finally here!
+
+This is gonna be fun! I'm sure you are going to enjoy how easy and amazing it gets when you build search UI's with InstantSearch.
+
+Best part, is that we can keep using the same codebase we've been using... wonders of NextJS. But, don't worry, if you want to use it in an old-fashioned SRP with Vite, CRA, or any other framework, you can still do it. Even if you are not using React, there are plenty of other options with InstantSearch that you can try, even vanilla JS!
+
+### 3.1. Get your API keys
+
+Go to your Algolia dashboard, and click on `Settings`. You should find `API Keys` right under `Team and Access` section.
+
+![alt text](blog/images/image-18.png)
+
+Once you click there, `Application ID` and `Search-Only API Key` should appear.
+
+Create an `.env` file in the root of your project, and create the following environment variables (copy and paste the following in your file, using your keys right next to the `=`):
+
+```
+NEXT_PUBLIC_ALGOLIA_APPLICATION_ID=ALGOLIA_APPLICATION_ID
+NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY=ALGOLIA_SEARCH_ONLY_API_KEY
+```
+
+> ✏️ Pro-tip, create an `.env.example` file with the same content above. This will help other devs to know what they are missing!
+
+> ⚠️ Don't forget to include your `.env` file to your `.gitignore` file! Just add a line that says `.env`.
+
+Now, you may be wondering, why the `NEXT_PUBLIC`? It's because that's how we expose environment variables to the browser in NextJS. All other environment variables that don't have that prefix will only be accessible by our server, so be careful when naming your environment variables when using NextJS!
+
+Once you have that set, let's create our first components.
+
+## 3.2. InstantSearch Wrapper
+
+Without further ado, let's complete the first steps from the [installation guide](https://www.algolia.com/doc/guides/building-search-ui/installation/react/).
+
+In your terminal, run the following command to install the library:
+
+```
+npm install algoliasearch react-instantsearch
+```
+
+Let's create our first component under `app/components/algolia/algolia.tsx`:
+
+```
+"use client";
+import algoliasearch from "algoliasearch/lite";
+import { InstantSearch } from "react-instantsearch";
+
+const searchClient = algoliasearch(
+  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY!
+);
+
+const Algolia = () => {
+  return (
+    <InstantSearch searchClient={searchClient} indexName="characters">
+      <div>Algolia</div>
+    </InstantSearch>
+  );
+};
+
+export default Algolia;
+```
+
+Delete everything from `app/page.tsx`, and get something like this, calling Algolia component we just created:
+
+```
+import Algolia from "./components/algolia/algolia";
+
+export default function Home() {
+  return (
+    <main className="flex flex-col min-h-screen">
+      <Algolia />
+    </main>
+  );
+}
+```
+
+Please, appreciate that the Tailwind classes used also changed.
+
+We're set, and ready to start adding widgets and create our own!
+What are widgets? Basically, UI components pre-built with functionalities.
+
+You can easily try widgets from the documentation [here](https://www.algolia.com/doc/guides/building-search-ui/widgets/showcase/react/). They are displayed in a way you can interact. Each time you hover them, a docs option will be displayed that you can click to see all the options available with code. I recommend you going there very time you have a doubt on how to implement any piece of UI available!
+
+### 3.2.1. Cleanup
+
+Let's do some cleanup before starting to add more code.
+
+Before continuing, please clean your `global.css` file, until it looks like this:
+
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+That way, we'll get rid off all undesired styles. We want to build our own stuff!
+
+### 3.2.2. Define your data type
+
+Search results are based on the file you uploaded. Ideally, everyone should know the data that is coming, but sometimes that is very, very hard. To avoid people from getting into the index and explore to see the available properties, and to be sure they can't access any undefined value in an object (TypeScript magic!), let's create an interface for our characters data.
+
+If you were following all the things we've been doing, and using the file provided in the repository, create the file `app/contracts/characters.ts` and add the following code:
+
+```
+export interface Character {
+  name: string;
+  title: string;
+  vision: string;
+  weapon: string;
+  gender: string;
+  nation: string;
+  affiliation: string;
+  description: string;
+  constellation: string;
+  rarity: number;
+  card: string;
+  "gacha-card": string;
+  "gacha-splash": string;
+  icon: string;
+  "icon-big": string;
+  "icon-side": string;
+  portrait: string;
+  "talent-burst": string;
+  "talent-na": string;
+  "talent-passive-0": string;
+  "talent-passive-1": string;
+  "talent-passive-2": string;
+  "talent-skill": string;
+}
+```
+
+This is one of the few interfaces we're gonna need, if not the only one meaningful.
+
+### 3.2.3. Displaying your hits
+
+"[Hit](https://www.algolia.com/doc/api-reference/widgets/hits/react/)" another term for your search results: each item that is being listed and displayed inside your Algolia index.
+
+Let's gonna do a first display of our data.
+
+I'll give you some indications if you wanna explore the options, and the code at the end.
+
+Go to your Algolia component, and "`import Hits from "react-instantsearch";`" (not like that! Just add `Hits` right next to the `InstantSearch` import).
+
+Then, call the component inside `<InstantSearch>`, wrapped by a `<ul>`.
+
+Use the prop `hitComponent`, which will receive a function, being the first argument the `hit` itself. Make the function return a component (or JSX, using `<li>`), using the data from `hit` (which contains a `hit` attribute that contains the real data... yes, fancy).
+
+The code should end up looking like this:
+
+```
+"use client";
+import algoliasearch from "algoliasearch/lite";
+import { Hits, InstantSearch } from "react-instantsearch";
+import { Character } from "../contracts/character";
+
+const searchClient = algoliasearch(
+  process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!,
+  process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_ONLY_API_KEY!
+);
+
+const Algolia = () => {
+  return (
+    <InstantSearch searchClient={searchClient} indexName="characters">
+      <ul>
+        <Hits
+          hitComponent={({ hit }: any) => {
+            const { name } = hit as Character;
+            return (
+              <li key={name} className="">
+                {name}
+              </li>
+            );
+          }}
+        />
+      </ul>
+    </InstantSearch>
+  );
+};
+
+export default Algolia;
+
+```
+
+As you can see, there is a little unexplained catch. We're using any for the `hit` parameter (yes, I hate it too), because it easier to "transform" `hit` into `Character` type, using TypeScript's [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) (`as`).
+
+Anyway, TypeScript is not the star here today, so let's not worry too much about it.
+
+Go to the index page, and... see our results coming!
+
+You should have a list of character names being displayed, coming from Algolia!
+
+I'll not extend into styling. I'm just gonna give you a component you can play with to show anything you want!
 
 # References
 
@@ -247,3 +440,4 @@ Some code here is based on some of the following links.
 
 - [ ] Chequear el código del route handler.
 - [ ] En el párrafo donde diga de hacer el csv en el mismo folder, cambiar por una nueva ruta que se llame data.
+- [ ] Change hero-and-villains-co for characters.
