@@ -1,8 +1,9 @@
 "use client";
-import algoliasearch from "algoliasearch/lite";
 import { Hits, InstantSearch } from "react-instantsearch";
-import { Character } from "../../contracts/character";
-import Hit from "../hit/hit";
+import algoliasearch from "algoliasearch/lite";
+import { Character } from "@/app/contracts/character";
+import Hit from "@/app/components/hit/hit";
+import SearchBox from "@/app/components/search-box/search-box";
 
 const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!,
@@ -12,6 +13,7 @@ const searchClient = algoliasearch(
 const Algolia = () => {
   return (
     <InstantSearch searchClient={searchClient} indexName="characters">
+      <SearchBox />
       <Hits
         hitComponent={({ hit }) => <Hit {...(hit as unknown as Character)} />}
         classNames={{

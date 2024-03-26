@@ -276,8 +276,8 @@ Let's create our first component under `app/components/algolia/algolia.tsx`:
 
 ```
 "use client";
-import algoliasearch from "algoliasearch/lite";
 import { InstantSearch } from "react-instantsearch";
+import algoliasearch from "algoliasearch/lite";
 
 const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!,
@@ -374,19 +374,18 @@ Let's gonna do a first display of our data.
 
 I'll give you some indications if you wanna explore the options, and the code at the end.
 
-Go to your Algolia component, and "`import Hits from "react-instantsearch";`" (not like that! Just add `Hits` right next to the `InstantSearch` import).
+Go to your Algolia component, and "`import { Hits } from "react-instantsearch";`.
 
-Then, call the component inside `<InstantSearch>`, wrapped by a `<ul>`.
+Then, call the component inside `<InstantSearch>`.
 
-Use the prop `hitComponent`, which will receive a function, being the first argument the `hit` itself. Make the function return a component (or JSX, using `<li>`), using the data from `hit` (which contains a `hit` attribute that contains the real data... yes, fancy).
+Use the prop `hitComponent`, which will receive a function, being the first argument the `hit` itself. Make the function return a component (or JSX, using `<li>`), getting data from `hit` (which contains a `hit` attribute that contains the real data... yes, fancy).
 
 The code should end up looking like this:
 
 ```
 "use client";
-import algoliasearch from "algoliasearch/lite";
 import { Hits, InstantSearch } from "react-instantsearch";
-import { Character } from "../contracts/character";
+import algoliasearch from "algoliasearch/lite";
 
 const searchClient = algoliasearch(
   process.env.NEXT_PUBLIC_ALGOLIA_APPLICATION_ID!,
@@ -396,43 +395,137 @@ const searchClient = algoliasearch(
 const Algolia = () => {
   return (
     <InstantSearch searchClient={searchClient} indexName="characters">
-      <ul>
-        <Hits
-          hitComponent={({ hit }: any) => {
-            const { name } = hit as Character;
-            return (
-              <li key={name} className="">
-                {name}
-              </li>
-            );
-          }}
-        />
-      </ul>
+      <Hits
+        hitComponent={({ hit }) => <li>{hit.name as string}</li>}
+      />
     </InstantSearch>
   );
 };
 
 export default Algolia;
-
 ```
-
-As you can see, there is a little unexplained catch. We're using any for the `hit` parameter (yes, I hate it too), because it easier to "transform" `hit` into `Character` type, using TypeScript's [type assertion](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-assertions) (`as`).
-
-Anyway, TypeScript is not the star here today, so let's not worry too much about it.
 
 Go to the index page, and... see our results coming!
 
-You should have a list of character names being displayed, coming from Algolia!
+You should have a list of character names being displayed from Algolia!
 
-I'll not extend into styling. I'm just gonna give you a component you can play with to show anything you want!
+If you want, you can create a `Hit` component and, to have all the props from `Character` available, extend its props from `Character`:
+
+```
+import { Character } from "@/app/contracts/character";
+
+interface Props extends Character {}
+const Hit = ({ name }: Props) => (<li>{name}</li>);
+
+export default Hit;
+```
+
+And use it like this in your Algolia component:
+
+```
+<Hit {...(hit as unknown as Character)} />
+```
+
+This might not be used for all cases because you generally want to know and see exactly what its being sent and received in your component, but its cool for experimenting and save some time. Always try to define exactly the props you'll be waiting for!
+
+Now, a little clarification:
+
+I will not stop into styling stuff. This is only covering basic usage and functionality. If you'd like to see the same things that were built, go and check the [repository](https://github.com/pablohaller/algolia-instantsearch).
+
+### 3.2.4 Adding a search bar
+
+If we're creating a search UI, having a search bar is a must. The showcase will help you to find what we want, and also the (documentation)[https://www.algolia.com/doc/api-reference/widgets/search-box/react/] for it.
+
+Let's do a basic implementation under `app/components/search-box/search-box.tsx`
+
+```
+import { useState, useRef } from "react";
+import {
+  useInstantSearch,
+  useSearchBox,
+  UseSearchBoxProps,
+} from "react-instantsearch";
+
+const SearchBox = (props: UseSearchBoxProps) => {
+  const { query, refine } = useSearchBox(props);
+  const { status } = useInstantSearch();
+  const [inputValue, setInputValue] = useState(query);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const isSearchStalled = status === "stalled";
+
+  function setQuery(newQuery: string) {
+    setInputValue(newQuery);
+
+    refine(newQuery);
+  }
+
+  return (
+    <div>
+      <form
+        action=""
+        role="search"
+        noValidate
+        onSubmit={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          if (inputRef.current) {
+            inputRef.current.blur();
+          }
+        }}
+        onReset={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
+          setQuery("");
+
+          if (inputRef.current) {
+            inputRef.current.focus();
+          }
+        }}>
+        <input
+          ref={inputRef}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          placeholder="Search for products"
+          spellCheck={false}
+          maxLength={512}
+          type="search"
+          value={inputValue}
+          onChange={(event) => {
+            setQuery(event.currentTarget.value);
+          }}
+          autoFocus
+        />
+        <button type="submit">Submit</button>
+        <button
+          type="reset"
+          hidden={inputValue.length === 0 || isSearchStalled}>
+          Reset
+        </button>
+        <span hidden={!isSearchStalled}>Searching…</span>
+      </form>
+    </div>
+  );
+};
+
+export default SearchBox;
+```
+
+Try typing any name you see on the screen, and see how its filtering!
+You could also try typing by some of the attributes above, and a particular subset should be displayed. For exmaple, `nation` or `vision`.
 
 # References
 
 Some code here is based on some of the following links.
 
+Special thanks to the authors and all the people involved answering questions!
+
 - [(Blog post) How to stream files from Next.js Route Handlers by Eric Burel](https://www.ericburel.tech/blog/nextjs-stream-files)
 
-- [(Stackoverflow )How do I add Basic Authentication to Nextjs node server?](https://stackoverflow.com/questions/64316886/how-do-i-add-basic-authentication-to-nextjs-node-server)
+- [(Stackoverflow) How do I add Basic Authentication to Nextjs node server?](https://stackoverflow.com/questions/64316886/how-do-i-add-basic-authentication-to-nextjs-node-server)
 
 - [(Github Issue) Using the new App Route Handlers](https://github.com/vercel/next.js/discussions/51662)
 
