@@ -739,7 +739,7 @@ Play a little bit with it, and see how it changes the order of all the character
 
 ### 4. On Styling
 
-As said, styling as said, styling will not be part of this guide, but the repository associated to it will have two branches, `main`, only with the code you've seen here, and styled, showing the following result:
+As said, styling as said, styling will not be part of this guide, but the repository associated to it will have two branches, `main`, only with the code you've seen here, and `styled`, showing the following result:
 
 ### 5. Conclussion
 
