@@ -432,7 +432,7 @@ Now, a little clarification:
 
 I will not stop into styling stuff. This is only covering basic usage and functionality. If you'd like to see the same things that were built, go and check the [repository](https://github.com/pablohaller/algolia-instantsearch).
 
-### 3.2.4 Adding a search bar
+### 3.2.4. Adding a search bar
 
 If we're creating a search UI, having a search bar is a must. The showcase will help you to find what we want, and also the (documentation)[https://www.algolia.com/doc/api-reference/widgets/search-box/react/] for it.
 
@@ -516,6 +516,232 @@ export default SearchBox;
 
 Try typing any name you see on the screen, and see how its filtering!
 You could also try typing by some of the attributes above, and a particular subset should be displayed. For exmaple, `nation` or `vision`.
+You can check that all match a certain criteria by checking your network tab, filtering the results, or just adding that attribute to your `Hit` component.
+
+But, what happens if you want to filter by one of those without typing, selecting them in a list?
+Well... you might need a refinement list.
+
+### 3.2.5. Adding a Refinement List.
+
+According to Algolia's documentation, a [refinement list](https://www.algolia.com/doc/api-reference/widgets/refinement-list/react/) is "_is a widget that lets users filter the dataset using multi-select facets [...] The widget also implements search for facet values, which provides a mini search inside the facet values. This helps users find uncommon facet values_".
+
+Again, let's add a basic implementation of it in `app/components/refinement-list/refinement-list.tsx`.
+
+```
+import React from "react";
+import { useRefinementList, UseRefinementListProps } from "react-instantsearch";
+
+const RefinementList = (props: UseRefinementListProps) => {
+  const {
+    items,
+    refine,
+    searchForItems,
+    canToggleShowMore,
+    isShowingMore,
+    toggleShowMore,
+  } = useRefinementList(props);
+
+  return (
+    <>
+      <input
+        type="search"
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
+        maxLength={512}
+        onChange={(event) => searchForItems(event.currentTarget.value)}
+      />
+      <ul>
+        {items.map((item) => (
+          <li key={item.label}>
+            <label>
+              <input
+                type="checkbox"
+                checked={item.isRefined}
+                onChange={() => refine(item.value)}
+              />
+              <span>{item.label}</span>
+              <span> ({item.count})</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+      <button onClick={toggleShowMore} disabled={!canToggleShowMore}>
+        {isShowingMore ? "Show less" : "Show more"}
+      </button>
+    </>
+  );
+};
+
+export default RefinementList;
+```
+
+Remember to wrap it with your `InstantSearch` component. It will ask you for an `attribute`, which is the field you want to "filter" by.
+You can add as many refinement lists as you want. You might want to test it right away... but there's is a catch. If you've been checking the documentation, you need to make the attributes for faceting explicit.
+
+Go to your dashboard, and click on the magnifying glass, as seen in the left side of the screen. Then, in your index, go to `Configuration`. There, search `Attributes for faceting`. In the first section, add all the options you want to facet for (e.g.: `vision`, `nation`, `weapon` and `affiliation` for our data set). Make them all `searchable`, by selecting the option from the dropdown, and don't forget clicking on save!
+
+![alt text](blog/images/image-19.png)
+
+![alt text](blog/images/image-20.png)
+
+Once that's done, your refinement lists should appear with a nice isolated search bar and some check boxes.
+
+If you click on the check boxes, you'll see how the refinement lists also update their order to match other refinements, isn't it cool?
+
+### 3.2.6. Current refinements and clearing
+
+As you go up, and down, and your UI moves everywhere, and you select more and more refinements, you'll end up losing your sight.
+
+We can use the `useCurrentRefinements` ([docs here](https://www.algolia.com/doc/api-reference/widgets/current-refinements/react/)) hook inside a new component that will list each one of them, giving us the functionality to remove them no mater what they are; we can also use a [clear refinements](https://www.algolia.com/doc/api-reference/widgets/clear-refinements/react/) component to clean the UI from any filter we added.
+
+We will use them together in one single component!
+
+Create a file in `app/components/current-refinements/current-refinements.tsx`:
+
+```
+import {
+  useClearRefinements,
+  UseClearRefinementsProps,
+  useCurrentRefinements,
+  UseCurrentRefinementsProps,
+} from "react-instantsearch";
+
+const isModifierClick = (event: React.MouseEvent) => {
+  const isMiddleClick = event.button === 1;
+
+  return Boolean(
+    isMiddleClick ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey
+  );
+};
+
+const ClearRefinements = (props: UseClearRefinementsProps) => {
+  const { canRefine, refine } = useClearRefinements(props);
+
+  return canRefine && <button onClick={refine}>Clear refinements</button>;
+};
+
+const CurrentRefinements = (props: UseCurrentRefinementsProps) => {
+  const { items, refine } = useCurrentRefinements(props);
+
+  return (
+    <>
+      <ClearRefinements />
+      <ul>
+        {items.map((item) => (
+          <li key={[item.indexName, item.label].join("/")}>
+            <span>{item.label}:</span>
+            {item.refinements.map((refinement) => (
+              <span key={refinement.label}>
+                <span>{refinement.label}</span>
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    if (isModifierClick(event)) {
+                      return;
+                    }
+
+                    refine(refinement);
+                  }}>
+                  Remove
+                </button>
+              </span>
+            ))}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
+
+export default CurrentRefinements;
+```
+
+### 3.2.7. Adding Pagination
+
+Now, what can we do to see more (or less) results that the ones that should be displayed? To fix that, we can add some [pagination](https://www.algolia.com/doc/api-reference/widgets/pagination/react/).
+
+Not all the components need to be custom. We can simply import something like `Pagination` from `react-instantsearch`, and it should work like a charm. You can also try to style it a little bit, like this:
+
+```
+ <Pagination
+        classNames={{
+          list: "flex gap-2",
+          item: "flex items-center justify-center w-8 h-8 rounded",
+          selectedItem: "bg-gray-400",
+          disabledItem: "opacity-50",
+        }}
+  />
+```
+
+### 3.2.8. Hits per page
+
+Once again, let's not rush into creating custom component's. Let's try more of the Algolia's behavior by default, to see how powerful it is just by using its components.
+
+Import `HitsPerPage` (you can check the docs [here](https://www.algolia.com/doc/api-reference/widgets/hits-per-page/react/)) from `react-instantsearch`, and inside the `InstantSearch` component, add the following:
+
+```
+ <HitsPerPage
+        items={[
+          { label: '8 hits per page', value: 8, default: true },
+          { label: '16 hits per page', value: 16 },
+          { label: '32 hits per page', value: 32 },
+        ]}
+  />
+```
+
+Remember that all of these components we've been adding display as any HTML. This component will appear in the exact same position you placed it.
+
+If you'd like to customize the component to use, for example, a [Listbox from Headlessui](https://headlessui.com/react/listbox), **always** look at the bottom of the page for custom implementation, like the ones we already made above, but, don't worry, as it is right now, changing the values should work!
+
+And if you pay attention, even the pagination will change accordingly to the items per page you've selected.
+
+### 3.2.9. Sorting
+
+We already have a UI full of connected amazing tools. But, we might want to see our results in an specific order. We're not going to create a new component, we're gonna use the [pre-defined one](https://www.algolia.com/doc/api-reference/widgets/sort-by/react/), but we do need to do some setup to use sorting.
+
+Replicas are "_are copies of your primary, seamlessly synchronized_", you also have virtual replicas, which are "_a view of your index synchronized and used for Relevant sorting only_".
+
+We're gonna use a Standard replica.
+
+Just go to your index, and access the replica tab. Hit on "**Create Replica Index**", and type the name of your replica. A common way to do it is `${index_name}_${sortby_attribute_name}_${sort_direction}`. For this case, let's use `characters_rarity_asc`, and `characters_rarity_desc`.
+
+![alt text](blog/images/image-21.png)
+
+Remember to save your changes.
+
+That will create new indexes.
+
+There is one more step, that is accessing them, going to their Configuration tab, and under **Ranking and Sorting**, selecting the corresponding sort value, and if it should sort ascending or descending.
+
+![alt text](blog/images/image-22.png)
+
+Don't forget to save your changes, and to the same for the next replica.
+
+Once those setups steps are done, you can add the `SortBy` component like this:
+
+```
+  <SortBy
+    items={[
+      { label: "Featured", value: "characters" },
+      { label: "Rarity (asc)", value: "characters_rarity_asc" },
+      { label: "Rarity (desc)", value: "characters_rarity_desc" },
+    ]}
+  />
+```
+
+Play a little bit with it, and see how it changes the order of all the characters depending on rarity!
+
+### 4. On Styling
+
+As said, styling as said, styling will not be part of this guide, but the repository associated to it will have two branches, `main`, only with the code you've seen here, and styled, showing the following result:
+
+### 5. Conclussion
 
 # References
 
