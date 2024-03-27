@@ -769,4 +769,4 @@ Also, for all of those gathering and hosting the assets from the final version u
 
 - [ ] Chequear el código del route handler.
 - [ ] En el párrafo donde diga de hacer el csv en el mismo folder, cambiar por una nueva ruta que se llame data.
-- [ ] Change hero-and-villains-co for characters.
+- [ ] Change hero-and-villains-co for characters..
