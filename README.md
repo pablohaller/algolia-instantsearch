@@ -755,6 +755,16 @@ Special thanks to the authors and all the people involved answering questions!
 
 - [(Github Issue) Using the new App Route Handlers](https://github.com/vercel/next.js/discussions/51662)
 
+- [How to change color , background and height of the particle background in react-tsparticles?](https://stackoverflow.com/questions/70625151/how-to-change-color-background-and-height-of-the-particle-background-in-react)
+
+Also, for all of those gathering and hosting the assets from the final version under `styled` branch:
+
+- [Project Amber](https://ambr.top/)
+
+- [genshin.dev API](https://github.com/genshindev/api)
+
+- [Genshin Assets](https://genshinimpactresources.tumblr.com/)
+
 # Publish notes
 
 - [ ] Chequear el código del route handler.

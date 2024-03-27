@@ -4,6 +4,8 @@ import {
   useSearchBox,
   UseSearchBoxProps,
 } from "react-instantsearch";
+import Input from "@/app/components/ui/input";
+import Button from "@/app/components/ui/button";
 
 const SearchBox = (props: UseSearchBoxProps) => {
   const { query, refine } = useSearchBox(props);
@@ -20,53 +22,52 @@ const SearchBox = (props: UseSearchBoxProps) => {
   }
 
   return (
-    <div>
-      <form
-        action=""
-        role="search"
-        noValidate
-        onSubmit={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
+    <form
+      className="w-full flex items-center justify-center gap-4"
+      action=""
+      role="search"
+      noValidate
+      onSubmit={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
 
-          if (inputRef.current) {
-            inputRef.current.blur();
-          }
+        if (inputRef.current) {
+          inputRef.current.blur();
+        }
+      }}
+      onReset={(event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        setQuery("");
+
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }}>
+      <Input
+        className="backdrop-blur-sm bg-background-secondary/30 "
+        ref={inputRef}
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
+        placeholder="Search for characters"
+        spellCheck={false}
+        maxLength={512}
+        type="search"
+        value={inputValue}
+        onChange={(event) => {
+          setQuery(event.currentTarget.value);
         }}
-        onReset={(event) => {
-          event.preventDefault();
-          event.stopPropagation();
-
-          setQuery("");
-
-          if (inputRef.current) {
-            inputRef.current.focus();
-          }
-        }}>
-        <input
-          ref={inputRef}
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          placeholder="Search for products"
-          spellCheck={false}
-          maxLength={512}
-          type="search"
-          value={inputValue}
-          onChange={(event) => {
-            setQuery(event.currentTarget.value);
-          }}
-          autoFocus
-        />
-        <button type="submit">Submit</button>
-        <button
-          type="reset"
-          hidden={inputValue.length === 0 || isSearchStalled}>
-          Reset
-        </button>
-        <span hidden={!isSearchStalled}>Searching…</span>
-      </form>
-    </div>
+        autoFocus
+      />
+      <Button type="submit">Submit</Button>
+      <Button
+        type="reset"
+        disabled={inputValue.length === 0 || isSearchStalled}>
+        Reset
+      </Button>
+    </form>
   );
 };
 

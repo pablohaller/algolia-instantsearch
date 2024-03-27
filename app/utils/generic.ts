@@ -9,3 +9,10 @@ export const isModifierClick = (event: React.MouseEvent) => {
       event.shiftKey
   );
 };
+
+export const scrollToTop = () => {
+  window?.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
