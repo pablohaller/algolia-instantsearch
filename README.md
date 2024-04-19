@@ -736,13 +736,13 @@ Play a little bit with it, and see how it changes the order of all the character
 
 ### 4. On Styling
 
-As said, styling as said, styling will not be part of this guide, but the repository associated to it will have two branches, `main`, only with the code you've seen here, and styled, showing the following result:
+As said,styling will not be part of this guide, but the repository associated to it will have two branches, `main`, only with the code you've seen here, and styled, showing the following result:
 
 ![alt text](blog/demo.gif)
 
 ### 5. Testing your app (in the cloud)
 
-After all your hard work, you might want to see all of these implemented, right? And probably running. The cool part is that we've been using the same repository all this time, and every time you pushed something, you'll see the url from the setup being refreshed with all your changes. They might seem incomplete, because you still need to add your env vars to your Vercel project.
+After all your hard work, you might want to see all of these implemented, right? And probably running. The cool part is that we've been using the same repository all this time, and every time you push something to your repo, when you access the same url from the setup, it will refresh with all your changes. They might seem incomplete, because you still need to add your env vars to your Vercel project.
 
 Check out their [official guide](https://vercel.com/docs/projects/environment-variables) and try it yourself; you'll notice that is easy as copying and pasting them.
 
